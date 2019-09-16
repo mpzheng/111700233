@@ -13,7 +13,7 @@ public class AddressJudge {
 		InputStreamReader reader=null;
 		BufferedReader br=null;
 		try {
-			is = hello.getClass().getResourceAsStream("address2.txt");
+			is = hello.getClass().getResourceAsStream("address.txt");
 			reader = new InputStreamReader(is, "utf-8");
 			br = new BufferedReader(reader);
 			ArrayList<String> list=new ArrayList<String>();
