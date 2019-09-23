@@ -97,8 +97,12 @@ class AddressBasic {
 		
 		m=Pattern.compile("市|自治州|盟").matcher(address);
 		if(m.find()) {
-			city="\""+address.substring(start,m.start())+m.group()+"\",";
+			try{
+				city="\""+address.substring(start,m.start())+m.group()+"\",";
 			start=m.end();
+			}catch (Exception ex) {
+				return "{"+addr+"}";
+			}
 		}
 		else {
 			String judge=AddressJudge.addrFill(address.substring(start,start+2));
@@ -119,15 +123,24 @@ class AddressBasic {
 		if(ok&&m.group().equals("区")&&a.find())ok=m.find();
 		if(ok&&m.group().equals("市")&&!b.find())ok=m.find();
 		if(ok) {
-			county="\""+address.substring(start,m.start())+m.group()+"\",";
-			start=m.end();
+			try{
+				county="\""+address.substring(start,m.start())+m.group()+"\",";
+				start=m.end();
+			}catch (Exception ex) {
+				return "{"+addr+"}";
+			}
 		}
 		else county="\"\",";
 		
 		m=Pattern.compile("街道|镇|乡|民族乡|苏木|民族苏木|县辖区").matcher(address);
 		if(m.find()) {
-			town="\""+address.substring(start,m.start())+m.group()+"\",";
-			start=m.end();
+			try{
+				town="\""+address.substring(start,m.start())+m.group()+"\",";
+				start=m.end();
+			}
+			catch (Exception ex) {
+				return "{"+addr+"}";
+			}
 		}
 		else town="\"\",";
 		
@@ -144,15 +157,23 @@ class AddressBasic {
 			boolean ok2=m.find();
 			if(ok2&&m.group().equals("街")&&a.find())ok2=m.find();
 			if(ok2) {
-				road="\""+address.substring(start,m.start())+m.group()+"\",";
+				try{
+					road="\""+address.substring(start,m.start())+m.group()+"\",";
 				start=m.end();
+				}catch (Exception ex) {
+					return "{"+addr+"}";
+				}
 			}
 			else road="\"\",";
 			
 			m=Pattern.compile("号").matcher(address);
 			if(m.find()) {
-				number="\""+address.substring(start,m.start())+m.group()+"\",";
+				try{
+					number="\""+address.substring(start,m.start())+m.group()+"\",";
 				start=m.end();
+				}catch (Exception ex) {
+					return "{"+addr+"}";
+				}
 			}
 			else number="\"\",";
 			
