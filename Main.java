@@ -74,8 +74,8 @@ class AddressBasic {
 		String number=null;
 		int start=0;
 		
-		m=Pattern.compile("Ê¡|×ÔÖÎÇø").matcher(address);
-		Matcher a=Pattern.compile("±±¾©|Ìì½ò|ÖØÇì|ÉÏº£").matcher(address);
+		m=Pattern.compile("çœ|è‡ªæ²»åŒº").matcher(address);
+		Matcher a=Pattern.compile("åŒ—äº¬|å¤©æ´¥|é‡åº†|ä¸Šæµ·").matcher(address);
 		if(m.find()) {
 			province="\""+address.substring(0,m.start())+m.group()+"\",";
 			start=m.end();
@@ -87,7 +87,7 @@ class AddressBasic {
 			String judge=AddressJudge.addrFill(address.substring(0,2));
 			if(judge!=null) {
 				province="\""+judge+"\",";
-				m=Pattern.compile("Ê¡|×ÔÖÎÇø").matcher(judge);
+				m=Pattern.compile("çœ|è‡ªæ²»åŒº").matcher(judge);
 				if(m.find())
 					start=m.start();
 			}
@@ -95,7 +95,7 @@ class AddressBasic {
 				province="\"\",";
 		}
 		
-		m=Pattern.compile("ÊĞ|×ÔÖÎÖİ|ÃË").matcher(address);
+		m=Pattern.compile("å¸‚|è‡ªæ²»å·|ç›Ÿ").matcher(address);
 		if(m.find()) {
 			city="\""+address.substring(start,m.start())+m.group()+"\",";
 			start=m.end();
@@ -104,7 +104,7 @@ class AddressBasic {
 			String judge=AddressJudge.addrFill(address.substring(start,start+2));
 			if(judge!=null) {
 				city="\""+judge+"\",";
-				m=Pattern.compile("ÊĞ|×ÔÖÎÖİ|ÃË").matcher(judge);
+				m=Pattern.compile("å¸‚|è‡ªæ²»å·|ç›Ÿ").matcher(judge);
 				if(m.find())
 					start+=m.start();
 			}
@@ -112,26 +112,26 @@ class AddressBasic {
 				city="\"\",";
 		}
 		
-		m=Pattern.compile("ÊĞ|Çø|ÏØ|×ÔÖÎÏØ|Æì|×ÔÖÎÆì|ÁÖÇø|ÌØÇø").matcher(address);
-		a=Pattern.compile("×ÔÖÎÇø").matcher(address);
-		Matcher b=Pattern.compile("×ÔÖÎÖİ|ÃË").matcher(address);
+		m=Pattern.compile("å¸‚|åŒº|å¿|è‡ªæ²»å¿|æ——|è‡ªæ²»æ——|æ—åŒº|ç‰¹åŒº").matcher(address);
+		a=Pattern.compile("è‡ªæ²»åŒº").matcher(address);
+		Matcher b=Pattern.compile("è‡ªæ²»å·|ç›Ÿ").matcher(address);
 		boolean ok=m.find();
-		if(ok&&m.group().equals("Çø")&&a.find())ok=m.find();
-		if(ok&&m.group().equals("ÊĞ")&&!b.find())ok=m.find();
+		if(ok&&m.group().equals("åŒº")&&a.find())ok=m.find();
+		if(ok&&m.group().equals("å¸‚")&&!b.find())ok=m.find();
 		if(ok) {
 			county="\""+address.substring(start,m.start())+m.group()+"\",";
 			start=m.end();
 		}
 		else county="\"\",";
 		
-		m=Pattern.compile("½ÖµÀ|Õò|Ïç|Ãñ×åÏç|ËÕÄ¾|Ãñ×åËÕÄ¾|ÏØÏ½Çø").matcher(address);
+		m=Pattern.compile("è¡—é“|é•‡|ä¹¡|æ°‘æ—ä¹¡|è‹æœ¨|æ°‘æ—è‹æœ¨|å¿è¾–åŒº").matcher(address);
 		if(m.find()) {
 			town="\""+address.substring(start,m.start())+m.group()+"\",";
 			start=m.end();
 		}
 		else town="\"\",";
 		
-		addr="{\"ĞÕÃû\":\""+name+"\",\"ÊÖ»ú\":\""+phoneNumber+"\",\"µØÖ·\":["+province+city+county+town;
+		addr="{\"å§“å\":\""+name+"\",\"æ‰‹æœº\":\""+phoneNumber+"\",\"åœ°å€\":["+province+city+county+town;
 		if(degree.equals("1")) {
 			if(start!=address.length()-1)
 				addr+="\""+address.substring(start,address.length()-1)+"\"]}";
@@ -139,17 +139,17 @@ class AddressBasic {
 				addr+="\""+"\"]}";
 		}
 		else if(degree.equals("2")||degree.equals("3")) {
-			m=Pattern.compile("Â·|Ïï|½Ö|ºúÍ¬|Ìõ").matcher(address);
-			a=Pattern.compile("½ÖµÀ").matcher(address);
+			m=Pattern.compile("è·¯|å··|è¡—|èƒ¡åŒ|æ¡").matcher(address);
+			a=Pattern.compile("è¡—é“").matcher(address);
 			boolean ok2=m.find();
-			if(ok2&&m.group().equals("½Ö")&&a.find())ok2=m.find();
+			if(ok2&&m.group().equals("è¡—")&&a.find())ok2=m.find();
 			if(ok2) {
 				road="\""+address.substring(start,m.start())+m.group()+"\",";
 				start=m.end();
 			}
 			else road="\"\",";
 			
-			m=Pattern.compile("ºÅ").matcher(address);
+			m=Pattern.compile("å·").matcher(address);
 			if(m.find()) {
 				number="\""+address.substring(start,m.start())+m.group()+"\",";
 				start=m.end();
